@@ -31,9 +31,23 @@ public class SalaryService {
 		
 		//TODO throw exception if employee name not found in db
 		return employeesRepo.findById(name)
-				.map(e -> new EmployeeDto(e.getName(), null, null))
+				.map(e -> new EmployeeDto(e.getName(), 
+						calcYearlySalary(e.getMonthlySalary()), null))
 				.orElse(null);
-		// return new EmployeeDto("johnny", 12000000, 1570000);
+	}
+	
+	/**
+	 * This method calculates yearly salary from monthly salary.
+	 * 
+	 * @param monthly salary in RM
+	 * @return yearly salary in sen
+	 */
+	private Integer calcYearlySalary(Integer salary) {
+		if (salary == null) {
+			return null;
+		}
+		
+		return salary * 12 * 100;
 	}
 	
 	public EmployeeDto updateEmployeeSalary(EmployeeDto emp) {
