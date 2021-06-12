@@ -3,6 +3,9 @@
  */
 package my.cryofoton.empsalary.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * @author Osman Sulaiman
  *
@@ -10,7 +13,10 @@ package my.cryofoton.empsalary.dto;
 public class EmployeeDto {
 
 	private String name;
+	
 	private Integer salary;
+	
+	@JsonInclude(Include.NON_NULL)
 	private Integer tax_payable;
 	
 	/**

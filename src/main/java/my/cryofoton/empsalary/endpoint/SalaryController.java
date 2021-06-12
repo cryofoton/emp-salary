@@ -3,8 +3,9 @@
  */
 package my.cryofoton.empsalary.endpoint;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,11 +28,19 @@ public class SalaryController {
 		this.salaryService = salaryService;
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@GetMapping("/")
 	public EmployeeDto getSalary(
 			@RequestParam(value = "name") String name) {
 		
 		//TODO validate requested name
 		return salaryService.getEmployeeSalary(name);
+	}
+	
+	@PutMapping("/")
+	public EmployeeDto updateSalary(@RequestBody EmployeeDto empDto) {
+		
+		//TODO validate salary info
+		//TODO check for proper response code
+		return salaryService.updateEmployeeSalary(empDto);
 	}
 }
