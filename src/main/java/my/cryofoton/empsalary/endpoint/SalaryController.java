@@ -70,7 +70,7 @@ public class SalaryController {
 			return false;
 		}
 		
-		Pattern pattern = Pattern.compile("^[a-zA-Z\\\\s]*$");
+		Pattern pattern = Pattern.compile("^[a-zA-Z\\s]*$");
 		Matcher matcher = pattern.matcher(name);
 		return matcher.matches();
 	}
