@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import my.cryofoton.empsalary.dao.repository.EmployeesRepository;
 import my.cryofoton.empsalary.dto.EmployeeDto;
+import my.cryofoton.empsalary.exception.RecordNotFoundException;
 
 /**
  * @author Osman Sulaiman
@@ -29,10 +30,10 @@ public class SalaryService {
 		this.employeesRepo = employeesRepo;
 	}
 
-	public EmployeeDto getEmployeeSalary(String name) {
+	public EmployeeDto getEmployeeSalary(String name) throws RecordNotFoundException {
 		Objects.requireNonNull(name);
 		
-		//TODO throw exception if employee name not found in db
+		// throw exception if employee name not found in db
 		return employeesRepo.findById(name)
 				.map(e -> {
 					BigDecimal yrSalary = calcYearlySalary(e.getMonthlySalary());
@@ -40,7 +41,7 @@ public class SalaryService {
 							convertToSen(yrSalary), 
 							convertToSen(calcTaxPayable(yrSalary)));
 				})
-				.orElse(null);
+				.orElseThrow(() -> new RecordNotFoundException("Employee not found"));
 	}
 	
 	private BigDecimal calcYearlySalary(Integer salary) {
@@ -117,16 +118,16 @@ public class SalaryService {
 				.orElse(null);
 	}
 	
-	public EmployeeDto updateEmployeeSalary(EmployeeDto emp) {
+	public EmployeeDto updateEmployeeSalary(EmployeeDto emp) throws RecordNotFoundException {
 		Objects.requireNonNull(emp);
 		
-		//TODO throw exception if employee name not found in db
+		// throw exception if employee name not found in db
 		return employeesRepo.findById(emp.getName())
 				.map(e -> {
 					e.setMonthlySalary(emp.getSalary());
 					return employeesRepo.save(e);
 					})
 				.map(e -> new EmployeeDto(e.getName(), e.getMonthlySalary(), null))
-				.get();
+				.orElseThrow(() -> new RecordNotFoundException("Employee not found"));
 	}
 }
