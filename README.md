@@ -1,5 +1,8 @@
 # Employee Salary API
 
+## About
+This is an app build as a technical assessment for Omesti Berhad.
+
 ## Requirements
 
 - Java 11 JDK
@@ -41,3 +44,10 @@ $ docker run --name emp-salary -p 8080:8080 -d cryofoton/emp-salary
 ```
 
 From there, you can access the API via url [http://localhost:8080](http://localhost:8080) using Postman, Insomnia, etc.
+
+## Endpoints
+
+There are two endpoints
+
+- GET -> `http://localhost:8080/?name=xxx` where xxx is the value to pass.
+- PUT -> `http://localhost:8080/` with the payload in the body.
